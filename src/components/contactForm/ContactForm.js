@@ -1,7 +1,5 @@
 import React from "react";
-import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
-import { render } from "@testing-library/react";
 
 export class ContactForm extends React.Component {
   state = {
@@ -23,12 +21,12 @@ export class ContactForm extends React.Component {
     // this.reset();
   };
 
-  reset = () => {
-    this.setState({
-      contacts: [],
-      name: '',
-    });
-  };
+  // reset = () => {
+  //   this.setState({
+  //     contacts: [],
+  //     name: '',
+  //   });
+  // };
  
 
   render() {
@@ -59,4 +57,8 @@ export class ContactForm extends React.Component {
       </form>
     );
   }
+}
+
+ContactForm.propTypes = {
+  addNewContact: PropTypes.func.isRequired
 }

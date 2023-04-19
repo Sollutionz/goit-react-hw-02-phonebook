@@ -13,8 +13,6 @@ export class App extends React.Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
   };
 
   handleInputChange = e => {
@@ -47,9 +45,20 @@ export class App extends React.Component {
       name: data.name,
       number: data.number,
     };
-    this.setState(prev => ({
+  if (
+      this.state.contacts.some(
+        contact =>
+          contact.name.toLowerCase().trim() ===
+          newContact.name.toLowerCase().trim()
+      )
+    ) {
+      alert(`Contact ${newContact.name} is already exists!`);
+      return;
+    }
+    else{this.setState(prev => ({
       contacts: [...prev.contacts, newContact],
-    }));
+    }))}
+    ;
   };
 
   getFiltered = () => {
@@ -61,6 +70,12 @@ export class App extends React.Component {
     );
   };
 
+  deleteContact = contactId => {
+    this.setState(prev => ({
+      contacts: prev.contacts.filter(({id})=>id !==contactId)
+    })) 
+  }
+
   render() {
     const filter = this.state.filter
     const filteredContacts = this.getFiltered();
@@ -71,7 +86,7 @@ export class App extends React.Component {
 
         <h2>Contacts</h2>
         <Filter filter={filter} onChange={this.onChangeFilter} />
-        <ContactList contacts={filteredContacts} />
+        <ContactList contacts={filteredContacts} deleteContact={this.deleteContact} />
       </>
     );
   }
